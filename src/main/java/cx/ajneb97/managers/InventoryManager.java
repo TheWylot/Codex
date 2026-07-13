@@ -279,13 +279,13 @@ public class InventoryManager {
         PlayerDataDiscovery playerDataDiscovery = playerDataManager.getDiscovery(player,category.getName(),discoveryName);
 
         CommonItem commonItem;
+        variables.add(new CommonVariable("%name%",discovery.getName()));
         if(playerDataDiscovery != null){
             if(discovery.getCustomLevelUnlockedItem() != null){
                 commonItem = discovery.getCustomLevelUnlockedItem();
             }else{
                 commonItem = category.getDefaultLevelUnlockedItem();
             }
-            variables.add(new CommonVariable("%name%",discovery.getName()));
             variables.add(new CommonVariable("%date%",playerDataDiscovery.getDiscoverDate()));
         }else{
             if(discovery.getCustomLevelBlockedItem() != null){

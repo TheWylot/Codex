@@ -292,7 +292,7 @@ public class CommonItemManager {
 
         //ADVANCED DATA
         CommonItemSkullData skullData = commonItem.getSkullData();
-        ItemUtils.setSkullData(item, skullData, null);
+        ItemUtils.setSkullData(item, skullData, player);
 
         CommonItemPotionData potionData = commonItem.getPotionData();
         ItemUtils.setPotionData(item, potionData);
