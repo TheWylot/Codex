@@ -1,6 +1,8 @@
 package cx.ajneb97.model.verify;
 
+import cx.ajneb97.api.CodexAPI;
 import cx.ajneb97.utils.JSONMessage;
+import cx.ajneb97.utils.JSONMessageAdventure;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -25,12 +27,24 @@ public class CodexInventoryInvalidDiscoveryError extends CodexBaseError {
     public void sendMessage(Player player) {
         List<String> hover = new ArrayList<String>();
 
-        JSONMessage jsonMessage = new JSONMessage(player,prefix+"&7Invalid discovery named &c"+levelName+" &7on file &c"+file);
-        hover.add("&eTHIS IS AN ERROR!");
-        hover.add("&fA non existing discovery associated with category ");
-        hover.add("&c"+categoryName+" &fis present on &finventory");
-        hover.add("&c"+inventoryName+" &fand slot &c"+slot+"&f.");
+        boolean isPaper = CodexAPI.getPlugin().getDependencyManager().isPaper();
+        if(isPaper){
+            JSONMessageAdventure jsonMessage = new JSONMessageAdventure(player,prefix+"<gray>Invalid discovery named <red>"+levelName+" <gray>on file <red>"+file);
+            hover.add("<yellow>THIS IS AN ERROR!");
+            hover.add("<white>A non existing discovery associated with category ");
+            hover.add("<red>"+categoryName+" <white>is present on <white>inventory");
+            hover.add("<red>"+inventoryName+" <white>and slot <red>"+slot+"<white>.");
 
-        jsonMessage.hover(hover).send();
+            jsonMessage.hover(hover).send();
+        }else{
+            JSONMessage jsonMessage = new JSONMessage(player,prefix+"&7Invalid discovery named &c"+levelName+" &7on file &c"+file);
+            hover.add("&eTHIS IS AN ERROR!");
+            hover.add("&fA non existing discovery associated with category ");
+            hover.add("&c"+categoryName+" &fis present on &finventory");
+            hover.add("&c"+inventoryName+" &fand slot &c"+slot+"&f.");
+
+            jsonMessage.hover(hover).send();
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 package cx.ajneb97.model.verify;
 
+import cx.ajneb97.api.CodexAPI;
 import cx.ajneb97.utils.JSONMessage;
+import cx.ajneb97.utils.JSONMessageAdventure;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -23,12 +25,24 @@ public class CodexInventoryNotExistsError extends CodexBaseError {
     public void sendMessage(Player player) {
         List<String> hover = new ArrayList<String>();
 
-        JSONMessage jsonMessage = new JSONMessage(player,prefix+"&7Inventory &c"+inventoryName+" &7not valid");
-        hover.add("&eTHIS IS AN ERROR!");
-        hover.add("&fThe &c"+inventoryName+" &fopenened inventory used");
-        hover.add("&fon slot &c"+slot+" &fon inventory &c"+inventoryPath);
-        hover.add("&fis not valid. Create it on the inventory.yml file.");
+        boolean isPaper = CodexAPI.getPlugin().getDependencyManager().isPaper();
+        if(isPaper){
+            JSONMessageAdventure jsonMessage = new JSONMessageAdventure(player,prefix+"<gray>Inventory <red>"+inventoryName+" <gray>not valid");
+            hover.add("<yellow>THIS IS AN ERROR!");
+            hover.add("<white>The <red>"+inventoryName+" <white>openened inventory used");
+            hover.add("<white>on slot <red>"+slot+" <white>on inventory <red>"+inventoryPath);
+            hover.add("<white>is not valid. Create it on the inventory.yml file.");
 
-        jsonMessage.hover(hover).send();
+            jsonMessage.hover(hover).send();
+        }else{
+            JSONMessage jsonMessage = new JSONMessage(player,prefix+"&7Inventory &c"+inventoryName+" &7not valid");
+            hover.add("&eTHIS IS AN ERROR!");
+            hover.add("&fThe &c"+inventoryName+" &fopenened inventory used");
+            hover.add("&fon slot &c"+slot+" &fon inventory &c"+inventoryPath);
+            hover.add("&fis not valid. Create it on the inventory.yml file.");
+
+            jsonMessage.hover(hover).send();
+        }
+
     }
 }
